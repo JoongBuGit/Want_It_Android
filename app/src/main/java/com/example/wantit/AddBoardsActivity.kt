@@ -132,8 +132,6 @@ class AddBoardsActivity : AppCompatActivity() {
                 val callServer = apiservice.createBoard(
                     requestBody, title, price, description, imageFile.name)
 
-                //Toast.makeText(this, "?", Toast.LENGTH_SHORT).show()
-
                 // 4. 네트워크 통신
                 callServer.enqueue(object : Callback<ArrayList<DataClass>> {
 

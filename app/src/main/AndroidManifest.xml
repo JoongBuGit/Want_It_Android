@@ -2,14 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- 통신하려면 인터넷 권한 필요 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--  api 버전별 갤러리에서 이미지를 읽는 권한  -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- api 버전별 갤러리에서 이미지를 읽는 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,15 +18,15 @@
         android:theme="@style/Theme.WantIt"
         tools:targetApi="31">
         <activity
+            android:name=".ShowBoardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.WantIt" />
+        <activity
             android:name=".AddBoardsActivity"
             android:exported="false" />
         <activity
             android:name=".HttpTestActivity"
             android:exported="false" />
-        <activity
-            android:name=".PostItemActivity"
-            android:exported="false"
-            android:theme="@style/Theme.WantIt" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

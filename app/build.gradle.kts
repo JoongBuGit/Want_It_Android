@@ -66,4 +66,7 @@ dependencies {
     // gson 컨버터, serialization library = 직렬화 라이브러리이다.
     implementation("com.squareup.retrofit2:converter-gson:${version}")
 
+    // glide 이미지 로딩 라이브러리
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }
