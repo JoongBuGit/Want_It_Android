@@ -27,6 +27,7 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -112,7 +113,7 @@ class AddBoardsActivity : AppCompatActivity() {
                 val requestBody = MultipartBody.Part.createFormData(
                     "image",
                     imageFile.name,
-                    RequestBody.create(MediaType.parse("image/$filenameExtension"), imageFile)
+                    RequestBody.create("image/$filenameExtension".toMediaTypeOrNull(), imageFile)
                 )
 
                 Log.e("이미지 네임", "네임 : "+imageFile.name)

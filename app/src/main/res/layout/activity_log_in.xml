@@ -8,6 +8,7 @@
     tools:context=".LogInActivity">
 
     <LinearLayout
+        android:layout_marginHorizontal="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -15,8 +16,14 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="48dp">
 
+        <ImageView
+            android:src="@drawable/want_it_icon"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
+            android:layout_marginBottom="10dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,34 +34,33 @@
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="194dp" />
 
-        <EditText
+        <TextView
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="학번을 입력하세요"
-            />
+            android:hint="중부대학교 중고 거래 플랫폼입니다" />
 
-        <EditText
-            android:id="@+id/editTextTextPassword"
+        <ImageButton
+            android:id="@+id/Kakao_login_button"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/kakao_login_medium_wide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/email_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            tools:layout_editor_absoluteX="96dp"
-            tools:layout_editor_absoluteY="281dp"
-            android:hint="비밀번호를 입력하세요"/>
-
-
+            android:layout_marginBottom="144dp"
+            android:text="이메일 로그인" />
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="144dp"
-            android:text="로그인"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="로그인" />
 
 
     </LinearLayout>
