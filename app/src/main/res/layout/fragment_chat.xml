@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatFragment">
+    tools:context=".ChatFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E1DCDC" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="채팅"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E1DCDC" />
+
+
+
+
+
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/chat_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="채팅 프레그먼트" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</FrameLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

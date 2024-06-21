@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#c8c8c8"
-
         />
 
     <ScrollView
@@ -26,26 +25,53 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/show_image_imageview"
                 android:src="@drawable/test_img1_cat"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"/>
 
-            <TextView
-                android:textSize="18dp"
-                android:text="아이템 페이지야"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:textSize="18dp"
-                android:text="아이템 페이지야"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/show_title_textview"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:text="제목"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:src="@drawable/test_img1_cat"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1DCDC" />
+
+                <TextView
+                    android:id="@+id/show_price_textview"
+                    android:textStyle="bold"
+                    android:layout_marginVertical="10dp"
+                    android:textSize="15dp"
+                    android:text="10000 원"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E1DCDC" />
+
+                <TextView
+                    android:id="@+id/show_description_textview"
+                    android:textSize="18dp"
+                    android:text="설명"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

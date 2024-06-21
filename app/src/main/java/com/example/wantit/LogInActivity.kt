@@ -36,7 +36,6 @@ class LogInActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
 
         val emailLoginButton = findViewById<Button>(R.id.email_login_button)
@@ -44,17 +43,13 @@ class LogInActivity : AppCompatActivity() {
             val intent = Intent(this, EmailLoginActivity::class.java)
             startActivity(intent)
 
-            // 메인 액티비티로 들어가기
+        }
+
+//        val loginButton = findViewById<Button>(R.id.login_button)
+//        loginButton.setOnClickListener{
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
 //            finish()
-        }
-
-        val loginButton = findViewById<Button>(R.id.login_button)
-        loginButton.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        }
     }
 }

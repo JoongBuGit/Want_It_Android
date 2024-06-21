@@ -1,8 +1,5 @@
 package com.example.wantit
 
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +12,7 @@ import com.bumptech.glide.Glide
 // 총 2개 클래스와 3개 메소드 선언 필수 -> 리사이클러뷰 사용조건
 // Adapter Class와 필수 재선언 메소드 onCreateViewHolder,onBindViewHolder,getItemCount 만들기
 // ViewHolder Class 만들기
-class BoardRecyclerAdapter(private val dataSet: ArrayList<DataClass>?, private val listener : OnItemClickListener) : RecyclerView.Adapter<BoardRecyclerAdapter.ViewHolder>()  {
+class BoardRecyclerAdapter(private val dataSet: ArrayList<BoardDataClass>?, private val listener : OnItemClickListener) : RecyclerView.Adapter<BoardRecyclerAdapter.ViewHolder>()  {
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val recyclerItemLayout : LinearLayout
@@ -50,7 +47,7 @@ class BoardRecyclerAdapter(private val dataSet: ArrayList<DataClass>?, private v
             .into(viewHolder.imageViewBoard)
 
         viewHolder.textViewTitle.text = dataSet?.get(position)?.title
-        viewHolder.textViewPrice.text = dataSet?.get(position)?.price.toString()
+        viewHolder.textViewPrice.text = dataSet?.get(position)?.price.toString()+" 원"
 
         // 각 item에 리스너 등록
         viewHolder.itemView.setOnClickListener {

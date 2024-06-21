@@ -1,14 +1,13 @@
 package com.example.wantit
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build.VERSION
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -16,17 +15,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
-import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import okhttp3.MediaType
+import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -51,6 +45,32 @@ class AddBoardsActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // 수정하려고 액티비티에 접근 했을 때 코드
+        val state = intent.getStringExtra("state")
+
+        // xml에 있는 View들 findViewById로 연결
+        val EditText_Title : EditText = findViewById<EditText>(R.id.EditText_Title)
+        val EditText_Price : EditText = findViewById<EditText>(R.id.EditText_Price)
+        val EditText_Description : EditText = findViewById<EditText>(R.id.EditText_Description)
+
+        Log.e("수정액티비티 상태", state.toString())
+        Log.e("수정액티비티 상태", intent.getStringExtra("title").toString())
+        Log.e("수정액티비티 상태", intent.getStringExtra("imageName").toString())
+
+
+        if (state.toString() == "edit") {
+            // 넘겨받은 이미지 이름으로 이미지 받기
+            val showImageImageview = findViewById<ImageView>(R.id.image_view_to_add)
+            val imageName = intent.getStringExtra("imageName")
+            Glide.with(this)
+                .load("https://z.msporthome.store/images/$imageName")
+                .into(showImageImageview)
+            // 넘겨받은 텍스트 뷰에 넣기
+            EditText_Title.setText(intent.getStringExtra("title"))
+            EditText_Price.setText(intent.getIntExtra("price",0).toString())
+            EditText_Description.setText(intent.getStringExtra("description"))
         }
 
         // 갤러리로 이동하는 이미지 버튼
@@ -89,14 +109,15 @@ class AddBoardsActivity : AppCompatActivity() {
         val submitButtonMakeBoard : Button = findViewById(R.id.submit_button_make_board)
         submitButtonMakeBoard.setOnClickListener {
 
-            // EditText 들 findViewById
-            val EditText_Title : EditText = findViewById<EditText>(R.id.EditText_Title)
-            val EditText_Price : EditText = findViewById<EditText>(R.id.EditText_Price)
-            val EditText_Description : EditText = findViewById<EditText>(R.id.EditText_Description)
-
+            // 서버에 넘겨줄 데이터
             val title = EditText_Title.text.toString()
             val price = EditText_Price.text.toString().toInt()
             val description = EditText_Description.text.toString()
+            val boardId = intent.getStringExtra("boardId")
+
+            // sharedPreferences에서 userId 데이터 가져오기
+            val sharedPreferences = getSharedPreferences("account", Context.MODE_PRIVATE)
+            val userId = sharedPreferences.getString("userId", "")
 
             Log.e("EditText", "네임 : "+title)
             Log.e("EditText", "네임 : "+price)
@@ -129,28 +150,60 @@ class AddBoardsActivity : AppCompatActivity() {
                 //2. service 객체 생성
                 val apiservice: ApiService = retrofit.create(ApiService::class.java)
 
-                //3. Call 객체 생성
-                val callServer = apiservice.createBoard(
-                    requestBody, title, price, description, imageFile.name)
 
-                // 4. 네트워크 통신
-                callServer.enqueue(object : Callback<ArrayList<DataClass>> {
 
-                    override fun onResponse(call: Call<ArrayList<DataClass>>, response: Response<ArrayList<DataClass>>) {
+                if (state.toString() == "edit") {     // 게시글 수정할 때
+                    //3. Call 객체 생성
+                    val callServer = apiservice.updateBoard(
+                        "", title, price, description)
 
-                        Log.e("에러 성공", ""+response.message())
+                    // 4. 네트워크 통신
+                    callServer.enqueue(object : Callback<ArrayList<BoardDataClass>> {
 
-                    }
+                        override fun onResponse(call: Call<ArrayList<BoardDataClass>>, response: Response<ArrayList<BoardDataClass>>) {
 
-                    override fun onFailure(call: Call<ArrayList<DataClass>>, throwable: Throwable) {
-                        // 오류 발생 시
-                        call.cancel()
-                        Log.e("에러 실패", throwable.message.toString())
-                        Log.e("에러 실패2", ""+imageUri.path.toString())
+                            Log.e("에러 성공", ""+response.message())
 
-                    }
+                        }
 
-                })
+                        override fun onFailure(call: Call<ArrayList<BoardDataClass>>, throwable: Throwable) {
+                            // 오류 발생 시
+                            call.cancel()
+                            Log.e("에러 실패", throwable.message.toString())
+                            Log.e("에러 실패2", ""+imageUri.path.toString())
+
+                        }
+
+                    })
+
+                } else {    // 새 게시글 만들 때
+                    //3. Call 객체 생성
+                    val callServer = apiservice.createBoard(
+                        requestBody, title, price, description, imageFile.name, userId.toString())
+
+                    // 4. 네트워크 통신
+                    callServer.enqueue(object : Callback<ArrayList<BoardDataClass>> {
+
+                        override fun onResponse(call: Call<ArrayList<BoardDataClass>>, response: Response<ArrayList<BoardDataClass>>) {
+
+                            Log.e("에러 성공", ""+response.message())
+
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<BoardDataClass>>, throwable: Throwable) {
+                            // 오류 발생 시
+                            call.cancel()
+                            Log.e("에러 실패", throwable.message.toString())
+                            Log.e("에러 실패2", ""+imageUri.path.toString())
+
+                        }
+
+                    })
+                }
+
+
+
+
 
                 finish()
             } else {
